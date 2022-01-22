@@ -21,10 +21,10 @@ class Solution {
        {
            return dp[n];
        }
-        int sr = (int)Math.sqrt(n);
-        for(int i =1;i<=sr;i++)
+        for(int i =1;i<=(int)Math.sqrt(n);i++)
         {
-            if(solve(dp,n-i*i)==0)
+            int check = n-i*i;
+            if(solve(dp,check)==0)
             {
                 dp[n]=1;
                 return 1;
