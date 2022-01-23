@@ -1,14 +1,20 @@
 class Solution {
     public List<Integer> sequentialDigits(int low, int high) {
-        List<Integer> nums = new ArrayList<>();
-        int arr[] = new int[]{12,23,34,45,56,67,78,89,123,234,345,456,567,678,789,1234,2345,3456,4567,5678,6789,12345,23456,34567,45678,56789,123456,234567,345678,456789,1234567,2345678,3456789,12345678,23456789,123456789};
-        for(int i=0;i<arr.length;i++)
-        {
-            if(arr[i]<=high && arr[i]>=low)
-            {
-                nums.add(arr[i]);
+        String digits = "123456789";
+        List<Integer> item = new ArrayList<>();
+        
+        for (int len = 2; len <= digits.length(); len++) {
+            for (int j = 0; j + len <= digits.length(); j++) {
+                String sub = digits.substring(j, j + len);
+                Integer num = Integer.parseInt(sub);
+                if (num >= low && num <= high) {
+                    item.add(num);
+                }
             }
         }
-        return nums;
+        
+        return item;
+        
+        
     }
 }
