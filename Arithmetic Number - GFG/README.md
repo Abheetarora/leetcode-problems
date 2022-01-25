@@ -1,5 +1,5 @@
 # Arithmetic Number
-##  Easy 
+## Easy 
 <div class="problem-statement">
                 <p></p><p><span style="font-size:18px">Given three integers &nbsp;'<strong>A</strong>' denoting the first term of an arithmetic sequence , '<strong>C</strong>' denoting the common difference&nbsp;of an arithmetic sequence and an integer '<strong>B</strong>'. you need to tell whether 'B' exists in the arithmetic sequence or not.</span></p>
 
