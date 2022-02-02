@@ -1,29 +1,43 @@
 class Solution {
-    public List<Integer> findAnagrams(String s, String p) {
-        int sarr[] = new int[26];
-        int parr[] = new int[26];
-         int ns = s.length(), np = p.length();
-    if (ns < np) return new ArrayList();
-         List<Integer> output = new ArrayList();
-        for(int i=0;i<p.length();i++)
-        {
-            parr[p.charAt(i) -'a']++;
-        }
-        for(int i=0;i<p.length();i++)
-        {
-            sarr[s.charAt(i) - 'a']++;
-        }
-        for(int i=0;i<=s.length() - p.length();i++)
-        {
-            System.out.println(i);
-            if(Arrays.equals(sarr,parr))
-            {
-                output.add(i);
-            }
-            sarr[(int)(s.charAt(i) - 'a')]--;
-            if( i + p.length() < s.length() )
-            sarr[(int)(s.charAt(i + (p.length())) - 'a')]++;
-        }
-        return output;
+  public List<Integer> findAnagrams(String s, String p) {
+
+    if (s.length() < p.length())
+        return new ArrayList();
+
+    Map<Character, Integer> map1 = new HashMap();
+    Map<Character, Integer> map2 = new HashMap();
+    for (char ch : p.toCharArray()) {
+      if (map1.containsKey(ch)) {
+        map1.put(ch, map1.get(ch) + 1);
+      }
+      else {
+        map1.put(ch, 1);
+      }
     }
+
+    List<Integer> ans = new ArrayList();
+    for (int i = 0; i < s.length(); ++i) {
+      char ch = s.charAt(i);
+      if (map2.containsKey(ch)) {
+        map2.put(ch, map2.get(ch) + 1);
+      }
+      else {
+        map2.put(ch, 1);
+      }
+      if (i >= p.length()) {
+        ch = s.charAt(i - p.length());
+        if (map2.get(ch) == 1) {
+          map2.remove(ch);
+        }
+        else {
+          map2.put(ch, map2.get(ch) - 1);
+        }
+      }
+ 
+      if (map1.equals(map2)) {
+        ans.add(i - p.length() + 1);
+      }
+    }
+    return ans;
+  }
 }
