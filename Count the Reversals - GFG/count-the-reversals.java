@@ -45,8 +45,12 @@ class Sol
             if(s.charAt(i)=='{') c1++;
             else c2++;
         }
-        
-        return (c1/2)+(c2/2)+(c1%2)+(c2%2);
+        double a = c1/2.0;
+        double b = c2/2.0;
+       int a1 = (int)(Math.ceil(a));
+       int a2 = (int)(Math.ceil(b));
+       
+        return (a1+a2);
         // your code here       
     }
 }
