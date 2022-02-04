@@ -22,28 +22,30 @@ class GFG
 
 //User function Template for Java
 class Solution{
-    static int minimumNumberOfSwaps(String s){
-        int count = 0,k = 0;
-      for(int i=0;i<s.length();i++)
-      {
-          if(s.charAt(i)==']')
-          {
-              k--;
-          }
-          else if(s.charAt(i) == '[')
-          {
-              if(k>=0)
-              {
-                  k++;
-              }
-              else
-              {
-                  count = count + (-1*k);
-                  k++;
-                  
-              }
-          }
-      }
-      return count;
+    static int minimumNumberOfSwaps(String S){
+        // code here
+        int fault = 0;
+        int count = 0;
+        for(int i=0;i<S.length();i++)
+        {
+            if(S.charAt(i)==']')
+            {
+                fault++;
+            }
+            else
+            {
+                if(fault >= 0)
+                {
+                    count = count + fault;
+                    fault--;
+                }
+                else
+                {
+                    fault--;
+                    
+                }
+            }
+        }
+        return count;
     }
 }
