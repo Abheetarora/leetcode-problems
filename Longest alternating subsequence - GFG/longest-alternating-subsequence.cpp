@@ -20,7 +20,7 @@ class Solution {
 		            j = i+1;
 		        }
 		    }
-		    return max(i,j) + 1;
+		    return max(i,j)+1;
 		}
 
 };
