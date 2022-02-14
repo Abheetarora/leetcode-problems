@@ -1,34 +1,48 @@
 class Solution {
-    public int[] topKFrequent(int[] nums, int k) {
-        // O(1) time
-        if (k == nums.length) {
-            return nums;
-        }
-        
-        // 1. build hash map : character and how often it appears
-        // O(N) time
-        Map<Integer, Integer> count = new HashMap();
-        for (int n: nums) {
-          count.put(n, count.getOrDefault(n, 0) + 1);
-        }
+public int[] topKFrequent(int[] nums, int k) {
+int[] ret = new int[k];
+Map<Integer, pair> map = new HashMap<Integer, pair>();
 
-        // init heap 'the less frequent element first'
-        Queue<Integer> heap = new PriorityQueue<>(
-            (n1, n2) -> count.get(n1) - count.get(n2));
-
-        // 2. keep k top frequent elements in the heap
-        // O(N log k) < O(N log N) time
-        for (int n: count.keySet()) {
-          heap.add(n);
-          if (heap.size() > k) heap.poll();    
+    for(int i = 0; i< nums.length; i++){
+        if(map.containsKey(nums[i])){
+            pair ct = map.get(nums[i]);
+            ct.frq += 1;
+            
+        }else{
+            map.put(nums[i], new pair(nums[i], 1));
         }
-
-        // 3. build an output array
-        // O(k log k) time
-        int[] top = new int[k];
-        for(int i = k - 1; i >= 0; --i) {
-            top[i] = heap.poll();
-        }
-        return top;
     }
+    
+    PriorityQueue<pair> pq = new PriorityQueue<pair>(k, new pairComparator());
+    for(Map.Entry<Integer, pair> e : map.entrySet()){
+        pq.add(e.getValue());
+    }
+    int i =0;
+    while(!pq.isEmpty()){
+        pair p = pq.poll();
+        if(i<k){
+             ret[i++] = p.num; 
+        }else{
+            break;
+        }
+      
+    }
+    return ret;
+}
+}
+class pairComparator implements Comparator<pair> {
+    public int compare(pair a, pair b)
+    {
+ 
+        return b.frq - a.frq;
+    }
+}
+ 
+class pair{
+int num;
+int frq;
+pair(int num, int frq){
+this.num = num;
+this.frq = frq;
+}
 }
