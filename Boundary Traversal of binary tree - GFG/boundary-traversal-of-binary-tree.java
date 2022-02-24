@@ -108,70 +108,73 @@ class GFG
 
 class Solution
 {
-boolean isleaf(Node root){
-   if(root.left==null&&root.right==null)
-       return true;
-   else
-       return false;
-}
-void sollb(Node root,ArrayList<Integer> lb){
-   Node cur=root.left;
-   while(cur!=null){
-       if(!isleaf(cur))
-           lb.add(cur.data);
-       if(cur.left!=null)
-          cur=cur.left;
-       else
-          cur=cur.right;
-   }
-}
-void soll(Node root, ArrayList<Integer> l){
-   if(root==null)
-     return;
-   if(isleaf(root)){
-       l.add(root.data);
-         return;
-   } 
-   soll(root.left,l);
-   soll(root.right,l);
-   
-}
-void solrb(Node root, ArrayList<Integer> rb){
-   Node cur=root.right;
-   while(cur!=null){
-       if(!isleaf(cur))
-           rb.add(cur.data);
-       if(cur.right!=null)
-          cur=cur.right;
-       else
-          cur=cur.left;
-   }
-}
-
-ArrayList <Integer> boundary(Node root)
-{  
-ArrayList<Integer> ans= new ArrayList<Integer>();
-if(root==null)
-    return ans;
-ans.add(root.data);
-if(isleaf(root))
-   return ans;
-    ArrayList<Integer> lb= new ArrayList<Integer>();
-    ArrayList<Integer> l= new ArrayList<Integer>();
-    ArrayList<Integer> rb= new ArrayList<Integer>();
-    sollb(root,lb);
-    soll(root,l);
-    solrb(root,rb);
-    for(int i:lb){
-        ans.add(i);
+// 	ArrayList <Integer> boundary(Node node)
+// 	{
+	    
+// 	}
+ArrayList<Integer>arr;
+    public ArrayList<Integer> boundary(Node root) {
+      arr = new ArrayList<Integer>();
+        if(root == null)
+        {
+            return arr;
+        }
+        if(root.left!=null || root.right!=null)
+        {
+            arr.add(root.data);
+        }
+        leftnodes(root.left);
+         leafnodes(root);
+        rightnodes(root.right);
+       
+        return arr;
     }
-    for(int i:l){
-        ans.add(i);
+    public void leftnodes(Node root)
+    {
+        if(root == null)
+        {
+            return;
+        }
+        if(root.left!=null || root.right!=null)
+        {
+            arr.add(root.data);
+        }
+        if(root.left == null)
+        {
+            leftnodes(root.right);
+        }
+        leftnodes(root.left);
+        
     }
-    int rbs=rb.size();
-    for(int i=rbs-1;i>=0;i--){
-        ans.add(rb.get(i));
+    public void rightnodes(Node root)
+    {
+        if(root == null)
+        {
+            return;
+        }
+       
+        if(root.right == null)
+        {
+            rightnodes(root.left);
+        }
+        rightnodes(root.right);
+         if(root.left!=null || root.right!=null)
+        {
+            arr.add(root.data);
+        }
+        
     }
-    return ans;
-}
+    public void leafnodes(Node root)
+    {
+        if(root == null)
+        {
+            return ;
+        }
+        if(root.right == null && root.left == null)
+        {
+            arr.add(root.data);
+        }
+        leafnodes(root.left);
+        leafnodes(root.right);
+    }
 }
