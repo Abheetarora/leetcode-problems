@@ -1,53 +1,82 @@
+/**
+ * Definition for a binary tree node.
+ * public class TreeNode {
+ *     int val;
+ *     TreeNode left;
+ *     TreeNode right;
+ *     TreeNode() {}
+ *     TreeNode(int val) { this.val = val; }
+ *     TreeNode(int val, TreeNode left, TreeNode right) {
+ *         this.val = val;
+ *         this.left = left;
+ *         this.right = right;
+ *     }
+ * }
+ */
 class Solution {
-    List<Integer> res;
+     ArrayList<Integer>arr;
     public List<Integer> boundaryOfBinaryTree(TreeNode root) {
-        res = new ArrayList<>();
-        if (root == null) {
-            return res;
+      arr = new ArrayList<Integer>();
+        if(root == null)
+        {
+            return arr;
         }
-        if (root.left != null || root.right != null) {
-            res.add(root.val);   
+        if(root.left!=null || root.right!=null)
+        {
+            arr.add(root.val);
         }
-        addLeft(root.left);
-        addLeaves(root);
-        addRight(root.right);
-        return res;
+        leftnodes(root.left);
+         leafnodes(root);
+        rightnodes(root.right);
+       
+        return arr;
     }
-    
-    private void addLeft(TreeNode root) {
-        if (root == null) {
+    public void leftnodes(TreeNode root)
+    {
+        if(root == null)
+        {
             return;
         }
-        if (root.left != null || root.right != null) {
-            res.add(root.val);   
+        if(root.left!=null || root.right!=null)
+        {
+            arr.add(root.val);
         }
-        if (root.left == null) {
-            addLeft(root.right);
+        if(root.left == null)
+        {
+            leftnodes(root.right);
         }
-        addLeft(root.left);
+        leftnodes(root.left);
+        
     }
-    
-    private void addRight(TreeNode root) {
-        if (root == null) {
+    public void rightnodes(TreeNode root)
+    {
+        if(root == null)
+        {
             return;
         }
-        if (root.right == null) {
-            addRight(root.left);
+       
+        if(root.right == null)
+        {
+            rightnodes(root.left);
         }
-        addRight(root.right);
-        if (root.left != null || root.right != null) {
-            res.add(root.val);   
+        rightnodes(root.right);
+         if(root.left!=null || root.right!=null)
+        {
+            arr.add(root.val);
         }
+        
     }
-    
-    private void addLeaves(TreeNode root) {
-        if (root == null) {
-            return;
+    public void leafnodes(TreeNode root)
+    {
+        if(root == null)
+        {
+            return ;
         }
-        if (root.left == null && root.right == null) {
-            res.add(root.val);
+        if(root.right == null && root.left == null)
+        {
+            arr.add(root.val);
         }
-        addLeaves(root.left);
-        addLeaves(root.right);
+        leafnodes(root.left);
+        leafnodes(root.right);
     }
 }
