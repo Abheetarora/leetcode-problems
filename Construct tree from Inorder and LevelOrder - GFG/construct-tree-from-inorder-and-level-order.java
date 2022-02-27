@@ -73,36 +73,49 @@ Driver Code to call/invoke your function is mentioned above.*/
 /*Complete the function below*/
 class GfG
 {
-   Node buildTree(int inord[], int level[])
-   {
-       //your code here
-       Node root = null;
-       return buildTreeUtil(root, inord, level, 0, inord.length - 1);
-   }
-   static Node buildTreeUtil(Node root, int[] inorder, int[] level, int inStart, int inEnd){
-       if(inStart > inEnd)
-           return null;
-       boolean found = false;
-       int index=0;
-       if(inStart == inEnd)
-           return new Node(inorder[inStart]);
-       for(int i=0; i<level.length - 1; i++){
-           int data = level[i];
-           for(int j=inStart; j<inEnd; j++){
-               if(inorder[j] == data){
-                   root = new Node(data);
-                   index = j;
-                   found = true;
-                   break;
-               }
-           }
-           if(found)
-               break;
-       }
-       root.setLeft(buildTreeUtil(root, inorder, level, inStart, index - 1));
-       root.setRight(buildTreeUtil(root, inorder, level, index + 1, inEnd));
-       return root;
-   }
+    Node buildTree(int inorder[], int level[])
+    {
+        Node root = null;
+        return solve(root,inorder,level,0,level.length-1);
+        
+        //your code here
+    }
+    Node solve(Node root,int inorder[],int level[],int instart,int inend)
+    {
+        if(instart>inend)
+        {
+            return null;
+        }
+        if(instart == inend)
+        {
+            return new Node(inorder[instart]);
+        }
+        int index = 0;
+        int flag = 0;
+        for(int i=0;i<level.length;i++)
+        {
+            int data = level[i];
+            for(int j=instart;j<inend;j++)
+            {
+                if(inorder[j] == data)
+                {
+                    root = new Node(data);
+                    index = j;
+                    flag =1;
+                    break;
+                }
+            }
+            if(flag == 1)
+            {
+                break;
+            }
+        }
+        root.setLeft( solve( root,inorder,level,instart,index-1 ) );
+        root.setRight( solve( root,inorder,level,index+1,inend ) );
+        
+        return root;
+    }
+    
    
 }
 
