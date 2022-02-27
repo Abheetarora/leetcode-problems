@@ -1,30 +1,42 @@
+/**
+ * Definition for a binary tree node.
+ * public class TreeNode {
+ *     int val;
+ *     TreeNode left;
+ *     TreeNode right;
+ *     TreeNode(int x) { val = x; }
+ * }
+ */
 class Solution {
-    private Integer maxWidth = 0;
-    private HashMap<Integer, Integer> firstColIndexTable;
-
-    protected void DFS(TreeNode node, Integer depth, Integer colIndex) {
-        if (node == null)
-            return;
-        // initialize the value, for the first seen colIndex per level
-        if (!firstColIndexTable.containsKey(depth)) {
-            firstColIndexTable.put(depth, colIndex);
-        }
-        Integer firstColIndex = firstColIndexTable.get(depth);
-
-        maxWidth = Math.max(this.maxWidth, colIndex - firstColIndex + 1);
-
-        // Preorder DFS. Note: it is important to put the priority on the left child
-        DFS(node.left, depth + 1, 2 * colIndex);
-        DFS(node.right, depth + 1, 2 * colIndex + 1);
-    }
-
     public int widthOfBinaryTree(TreeNode root) {
-        // table contains the first col_index for each level
-        this.firstColIndexTable = new HashMap<Integer, Integer>();
+        if (root == null)
+            return 0;
 
-        // start from depth = 0, and colIndex = 0
-        DFS(root, 0, 0);
+        // queue of elements [(node, col_index)]
+        LinkedList<Pair<TreeNode, Integer>> queue = new LinkedList<>();
+        Integer maxWidth = 0;
 
-        return this.maxWidth;
+        queue.addLast(new Pair<>(root, 0));
+        while (queue.size() > 0) {
+            Pair<TreeNode, Integer> head = queue.getFirst();
+
+            // iterate through the current level
+            Integer currLevelSize = queue.size();
+            Pair<TreeNode, Integer> elem = null;
+            for (int i = 0; i < currLevelSize; ++i) {
+                elem = queue.removeFirst();
+                TreeNode node = elem.getKey();
+                if (node.left != null)
+                    queue.addLast(new Pair<>(node.left, 2 * elem.getValue()));
+                if (node.right != null)
+                    queue.addLast(new Pair<>(node.right, 2 * elem.getValue() + 1));
+            }
+
+            // calculate the length of the current level,
+            //   by comparing the first and last col_index.
+            maxWidth = Math.max(maxWidth, elem.getValue() - head.getValue() + 1);
+        }
+
+        return maxWidth;
     }
 }
