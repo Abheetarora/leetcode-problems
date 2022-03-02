@@ -143,19 +143,19 @@ class GfG {
     }
     int dist(Node root, int a, int height)
     {
-        if(root == null)
-        {
-            return 0;
-        }
-        if(root.data == a)
-        {
-            return height;
-        }
-        int l = dist(root.left,a,height+1);
-        if(l==0)
-        {
-            return dist(root.right,a,height+1);
-        }
-        return l;
+       if(root == null)
+       {
+           return 0;
+       }
+       if(root.data == a)
+       {
+           return height;
+       }
+       int l = dist(root.left,a,height+1);
+       if(l == 0)
+       {
+           l = dist(root.right,a,height+1);
+       }
+       return l;
     }
 }
