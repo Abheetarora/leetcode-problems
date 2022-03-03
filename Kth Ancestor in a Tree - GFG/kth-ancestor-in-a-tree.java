@@ -125,30 +125,35 @@ class Node {
 class Tree
 {
     int ans = -1;
-    public int dfs(Node root, int k, int node)
+    public int solve(Node root,int k,int node)
     {
-        if(root == null)
-        {
-            return 0;
-        }
-        if(root.data == node)
-        return 1;
-        int lf = dfs(root.left,k,node);
-        int rf = dfs(root.right,k,node);
-        if(lf == k || rf == k)
-        {
-            ans = root.data;
-        }
-        if(lf>0)
-        return lf+1;
-        else if(rf>0)
-        return rf+1;
-        else
-        return 0;
+     if(root == null)
+     {
+         return 0;
+     }
+     if(root.data == node)
+     {
+         return 1;
+     }
+     int lf = solve(root.left,k,node);
+     int rg = solve(root.right,k,node);
+     if(lf == k || rg == k)
+     {
+         ans = root.data;
+     }
+     if(lf>0)
+     {
+         return lf+1;
+     }
+     else if(rg>0)
+{
+    return rg+1;
+}     
+return 0;
     }
     public int kthAncestor(Node root, int k, int node)
     {
-        dfs(root,k,node);
+        solve(root,k,node);
         return ans;
         //Write your code here
     }
