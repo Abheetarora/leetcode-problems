@@ -1,5 +1,6 @@
 class Solution {
     public int countVowelStrings(int n) {
-        return (n + 4) * (n + 3) * (n + 2) * (n + 1) / 24;
+       int ans = (n+4)*(n+3)*(n+2)*(n+1);
+        return ans/24;
     }
 }
