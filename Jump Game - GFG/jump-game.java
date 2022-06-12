@@ -28,8 +28,7 @@ class GFG {
 
 class Solution {
     static int canReach(int[] A, int N) {
-        // code here
-        if(canJump(A)==true)
+        if(helper(A)==true)
         {
             return 1;
         }
@@ -38,11 +37,11 @@ class Solution {
             return 0;
         }
     }
-     public static boolean canJump(int[] nums) {
-        return canJump(nums, 0, new Boolean[nums.length + 1]);
+     public static boolean helper(int[] nums) {
+        return helper(nums, 0, new Boolean[nums.length + 1]);
     }
     
-    public static boolean canJump(int[] nums, int index, Boolean[] dp) {
+    public static boolean helper(int[] nums, int index, Boolean[] dp) {
         if(index == nums.length - 1) {
             return true;
         }
@@ -53,7 +52,7 @@ class Solution {
         
         int n = nums[index];
         for(int i = n; i > 0; i--) {
-            if(index + i < nums.length && canJump(nums, index + i, dp)){
+            if(index + i < nums.length && helper(nums, index + i, dp)){
                 dp[index] = true;
                 return true;
             }
