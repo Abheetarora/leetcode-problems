@@ -28,7 +28,7 @@ class Solution {
         {
             dfs(node.left,node);
             dfs(node.right,node);
-            if(parent == null && !st.contains(node) || !st.contains(node.left) || !st.contains(node.right))
+            if((parent == null && !st.contains(node)) || !st.contains(node.left) || !st.contains(node.right))
             {
                 ans++;
                 st.add(node);
