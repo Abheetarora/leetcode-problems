@@ -4,34 +4,39 @@
  *     int val;
  *     TreeNode left;
  *     TreeNode right;
- *     TreeNode(int x) { val = x; }
+ *     TreeNode() {}
+ *     TreeNode(int val) { this.val = val; }
+ *     TreeNode(int val, TreeNode left, TreeNode right) {
+ *         this.val = val;
+ *         this.left = left;
+ *         this.right = right;
+ *     }
  * }
  */
 class Solution {
-    
-    public void recurseTree(TreeNode node, int remainingSum, List<Integer> pathNodes, List<List<Integer>> pathsList) {
-        
-        if (node == null) {
+    public void solve(TreeNode root,List<List<Integer>>ans,List<Integer>smallans,int sum)
+    {
+        if(root == null)
+        {
             return;
         }
-        
-        pathNodes.add(node.val);
-        
-        if (remainingSum == node.val && node.left == null && node.right == null) {
-            pathsList.add(new ArrayList<>(pathNodes));
-        } else {
-            
-            recurseTree(node.left, remainingSum - node.val, pathNodes, pathsList);
-            recurseTree(node.right, remainingSum - node.val, pathNodes, pathsList);
+        smallans.add(root.val);
+        if(root.left == null && root.right == null && sum == root.val)
+        {
+            ans.add(new ArrayList<>(smallans));
         }
+        else
+        {
+            solve(root.left,ans,smallans,sum-root.val);
+            solve(root.right,ans,smallans,sum-root.val);
+        }
+        smallans.remove(smallans.size()-1);
         
-        pathNodes.remove(pathNodes.size() - 1);
     }
-    
-    public List<List<Integer>> pathSum(TreeNode root, int sum) {
-        List<List<Integer>> pathsList = new ArrayList<List<Integer>>();
-        List<Integer> pathNodes = new ArrayList<Integer>();
-        recurseTree(root, sum, pathNodes, pathsList);
-        return pathsList;        
+    public List<List<Integer>> pathSum(TreeNode root, int targetSum) {
+        List<List<Integer>>ans = new ArrayList<>();
+        List<Integer>smallans = new ArrayList<>();
+        solve(root,ans,smallans,targetSum);
+        return ans;
     }
 }
